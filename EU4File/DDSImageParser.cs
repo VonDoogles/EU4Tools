@@ -113,31 +113,24 @@ namespace EU4Tools
             return compdata;
         }
 
+        static void Swap<T>( ref T lhs, ref T rhs )
+        {
+            T temp = lhs;
+            lhs = rhs;
+            rhs = temp;
+        }
+
         private BitmapSource CreateBitmap(int width, int height, byte[] rawData)
         {
             int size = width * height * 4;
-            BitmapSource bitmap = BitmapSource.Create(width, height, 96, 96, System.Windows.Media.PixelFormats.Bgra32, null, rawData, width * 4);
 
-/*            BitmapData data = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height)
-                , ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            IntPtr scan = data.Scan0;
-
-            unsafe
+            // Swap the Red and Blue channels
+            for ( int i = 0; i < size; i += 4 )
             {
-                byte* p = (byte*)scan;
-                for (int i = 0; i < size; i += 4)
-                {
-                    // iterate through bytes.
-                    // Bitmap stores it's data in RGBA order.
-                    // DDS stores it's data in BGRA order.
-                    p[i] = rawData[i + 2]; // blue
-                    p[i + 1] = rawData[i + 1]; // green
-                    p[i + 2] = rawData[i];   // red
-                    p[i + 3] = rawData[i + 3]; // alpha
-                }
+                Swap(ref rawData[i + 0], ref rawData[i + 2]);
             }
 
-            bitmap.UnlockBits(data);*/
+            BitmapSource bitmap = BitmapSource.Create(width, height, 96, 96, System.Windows.Media.PixelFormats.Bgra32, null, rawData, width * 4);
             return bitmap;
         }
 
