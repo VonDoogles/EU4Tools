@@ -31,7 +31,34 @@
                     </ad:LayoutAnchorablePane>
                     <ad:LayoutDocumentPane>
                         <ad:LayoutDocument Title="Main Canvas">
-                            <Canvas x:Name="MainCanvas" />
+                            <DockPanel>
+                                <ToolBarTray DockPanel.Dock="Top">
+                                    <ToolBar>
+                                        <Label Content="Resolution:" />
+                                        <TextBox x:Name="TextResX" Width="40" PreviewTextInput="TextResX_PreviewTextInput" DataObject.Pasting="TextResX_Pasting" Text="1920" />
+                                        <Label Content="x" />
+                                        <TextBox x:Name="TextResY" Width="40" PreviewTextInput="TextResY_PreviewTextInput" DataObject.Pasting="TextResY_Pasting" Text="1080" />
+                                        <Separator Margin="6,2"/>
+                                        <ComboBox x:Name="ZoomCombo" Width="60" IsEditable="True" IsTextSearchEnabled="False" KeyUp="ZoomCombo_KeyUp" SelectionChanged="ZoomCombo_SelectionChanged" LostKeyboardFocus="ZoomCombo_LostKeyboardFocus">
+                                            <ComboBoxItem Content="800%" />
+                                            <ComboBoxItem Content="400%" />
+                                            <ComboBoxItem Content="200%" />
+                                            <ComboBoxItem Content="150%" />
+                                            <ComboBoxItem Content="100%" IsSelected="True"/>
+                                            <ComboBoxItem Content="66.67%" />
+                                            <ComboBoxItem Content="50%" />
+                                            <ComboBoxItem Content="33.33%" />
+                                            <ComboBoxItem Content="25%" />
+                                            <ComboBoxItem Content="12.5%" />
+                                            <Separator/>
+                                            <ComboBoxItem Content="Fit All"/>
+                                        </ComboBox>
+                                    </ToolBar>
+                                </ToolBarTray>
+                                <ScrollViewer x:Name="ScrollView" CanContentScroll="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="ScrollView_MouseWheel">
+                                    <Canvas x:Name="MainCanvas" Width="1920" Height="1080" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
+                                </ScrollViewer>
+                            </DockPanel>
                         </ad:LayoutDocument>
                         <ad:LayoutDocument Title="File View">
                             <TextBox x:Name="TextView" Background="#FFEEEEEE" IsReadOnly="True" VerticalScrollBarVisibility="Auto" IsInactiveSelectionHighlightEnabled="True" PreviewMouseWheel="TextView_PreviewMouseWheel" />
