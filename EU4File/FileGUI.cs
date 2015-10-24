@@ -249,6 +249,25 @@ namespace EU4Tools
             {
                 return T.IsValueType ? Activator.CreateInstance( T ) : null;
             }
+
+            public Element FindFirst( Predicate<Element> Predicate )
+            {
+                if ( Predicate( this ) )
+                {
+                    return this;
+                }
+
+                foreach (Element Item in ItemList)
+                {
+                    Element Found = Item.FindFirst( Predicate );
+                    if (Found != null)
+                    {
+                        return Found;
+                    }
+                }
+
+                return null;
+            }
         }
 
         [DebuggerDisplay( "Type = {Type}, Value = {Value}" )]
